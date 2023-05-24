@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from '@react-navigation/native';
 import { Colors, Fonts, Default } from "../constants/style";
 import { getNews, saveExpoPushToken } from '../api/index';
-// import { GAMBannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';  // FOR ADS GOOGLE
+import { GAMBannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';  // FOR ADS GOOGLE
 
 const HomeScreen = (props) => {
 

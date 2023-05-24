@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from "react";
 import {
   Text,
   View,
@@ -7,22 +6,13 @@ import {
   StatusBar,
   Image,
   FlatList,
-  StyleSheet,
 } from "react-native";
 import * as WebBrowser from 'expo-web-browser';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTranslation } from "react-i18next";
-import Carousel from 'react-native-snap-carousel';
-
-
 import { Colors, Fonts, Default } from "../constants/style";
-
-import { getBreakingNews } from '../api/index';
-
-import {getScreenWidth, getScreenHeight} from '../helpers/DimensionsHelper';
-const SCREEN_WIDTH = getScreenWidth();
-
-import NewsCard from '../components/NewsCard';
+import React, {useEffect, useState} from "react";
+import { getBreakingNews } from '../api/index'
 
 const VideoScreen = (props) => {
   const [breakingNews, setBreakingNews] = useState([])
@@ -36,19 +26,7 @@ const VideoScreen = (props) => {
 
   useEffect(() => {
     getBreakingNews().then((response) => {
-      let formatedBreakingNews = response?.data.map((news)=>{
-        return {
-          source_name: news.author,
-          title: news.title,
-          image_url: news.logo,
-          content: news.content,
-          description: news.description,
-          bottom_headline: news.description,
-          bottom_text: "",
-          sourceLink:news.sourceLink,
-        }
-      })
-      setBreakingNews(formatedBreakingNews);
+      setBreakingNews(response?.data);
     });
   }, []);
   
@@ -132,41 +110,6 @@ const VideoScreen = (props) => {
     );
   };
 
-  const data = [
-    {
-      source_name: 'bbc',
-      title: 'Donna Ongsiako, left for dead, survived a violent home invasion',
-      image_url: 'https://assets3.cbsnewsstatic.com/hub/i/r/2023/05/21/ca30b52a-486f-4547-9919-e617103969a2/thumbnail/1200x630/3942baa04b35a4446ff1539b9236f7f3/ongsiako-donna.jpg',
-      content: 'Tiny Colts Neck, New Jersey, sits just 50 miles from New York City. But it might as well be a world away. In July 2013, this quiet community was rocked by news of a violent home invasion whe',
-      bottom_headline: "headline bottom",
-      bottom_text: "bottom test asdasdfasf"
-    },
-    {
-      source_name: 'bbc',
-      title: 'Nikola Jokic joins Zubin Mehenti on Sports',
-      image_url: 'https://i.ytimg.com/vi/JnRLLZ6ofEA/maxresdefault.jpg',
-      content: 'Nikola Jokic joins Zubin Mehenti on Sports',
-      bottom_headline: "headline bottom",
-      bottom_text: "bottom test asdasdfasf"
-    },
-  ]
-
-  // const {
-  //   source_name,
-  //   title,
-  //   image_url,
-  //   content,
-  //   bottom_headline,
-  //   bottom_text,
-  // } = this.props.data.news_obj;
-  
-
-  const renderItem = ({item, index}) => {
-    return (
-      <NewsCard key={String(index)} data={item} />
-    );
-  };
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
       <StatusBar backgroundColor={Colors.white} barStyle="dark-content" />
@@ -186,55 +129,15 @@ const VideoScreen = (props) => {
         </Text>
       </View>
 
-      {/* <FlatList
+      <FlatList
         style={{ backgroundColor: Colors.white }}
         data={breakingNews}
         renderItem={renderItemBreakingNews}
         keyExtractor={(item) => item.key}
         showsVerticalScrollIndicator={false}
-      /> */}
-
-      <View style={styles.container}>
-      <Carousel
-        data={breakingNews}
-        renderItem={renderItem}
-          sliderWidth={SCREEN_WIDTH}
-          sliderHeight={getScreenHeight()}
-          itemWidth={SCREEN_WIDTH}
-          itemHeight={getScreenHeight()}
-          inactiveSlideOpacity={1}
-          inactiveSlideScale={1}
-          vertical={true}
-          lockScrollWhileSnapping={true}
-          swipeThreshold={70}
-          nestedScrollEnabled
-          windowSize={5}
       />
-    </View>
-
     </SafeAreaView>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  card: {
-    backgroundColor: 'lightgray',
-    borderRadius: 10,
-    padding: 20,
-    width: 200,
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});
 
 export default VideoScreen;
-

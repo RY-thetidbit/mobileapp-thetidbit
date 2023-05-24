@@ -42,7 +42,7 @@
     "bottomTab": {
         "home": "Home",
         "category": "Category",
-        "video": "Video",
+        "video": "General",
         "weather": "Weather",
         "profile": "Profile",
         "exitApp": "Tap back again to exit the App"
@@ -58,25 +58,25 @@
         "education": "Education",
         "health": "Health",
         "other": "Other",
-        "localNews": "Local News",
-        "nationalNews": "National news",
+        "localNews": "Health",
+        "nationalNews": "Entertainment",
         "worldNews": "World news",
-        "politicsNews": "Politics news"
+        "politicsNews": "Business"
     },
     "breakingNewsScreen": {
         "breakingNews": "Breaking news"
     },
     "localNewsScreen": {
-        "localNews": "Local news"
+        "localNews": "Health"
     },
     "nationalNewsScreen": {
-        "nationalNews": "National news"
+        "nationalNews": "Entertainment"
     },
     "worldNewsScreen": {
         "worldNews": "World news"
     },
     "politicNewsScreen": {
-        "politicsNews": "Politics news"
+        "politicsNews": "Business"
     },
     "newsDetailScreen": {
         "following": "Following",
@@ -114,8 +114,8 @@
         "trendingNews": "Trending news",
         "categories": "Categories",
         "news": "News",
-        "localNews": "Local news",
-        "nationalNews": "National news",
+        "localNews": "Health",
+        "nationalNews": "Entertainment",
         "worldNews": "World news",
         "politics": "Politics",
         "allNews": "All news",
@@ -150,8 +150,8 @@
     "categoryScreen": {
         "categories": "Categories",
         "news": "News",
-        "localNews": "Local news",
-        "nationalNews": "National news",
+        "localNews": "Health",
+        "nationalNews": "Entertainment",
         "worldNews": "World news",
         "politics": "Politics",
         "allNews": "All news",
@@ -194,7 +194,7 @@
         "savings": "Savings"
     },
     "videoScreen": {
-        "video": "Video"
+        "video": "General"
     },
     "weatherScreen": {
         "tomorrow": "Tomorrow",

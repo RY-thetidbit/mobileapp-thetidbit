@@ -2,23 +2,20 @@ import {
   Text,
   View,
   SafeAreaView,
+  FlatList,
+  BackHandler,
   TouchableOpacity,
   Image,
   StatusBar,
-  FlatList,
-  BackHandler,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import * as WebBrowser from 'expo-web-browser';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { useTranslation } from "react-i18next";
+import React, { useEffect } from "react";
 import { Colors, Fonts, Default } from "../constants/style";
-import { getBusiness } from '../api/index';
+import { useTranslation } from "react-i18next";
 
-const PoliticNewsScreen = (props) => {
-  const [politicsNews, setPoliticsNews] = useState([])
+const FollowChannelScreen = (props) => {
   const backAction = () => {
-    props.navigation.navigate("homeScreen");
+    props.navigation.goBack();
     return true;
   };
   useEffect(() => {
@@ -28,88 +25,71 @@ const PoliticNewsScreen = (props) => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
 
-  useEffect(() => {
-    getBusiness().then((response) => {
-      setPoliticsNews(response?.data);
-    });
-  }, []);
-
-  const _handlePressButtonAsync = async (e, item) => {
-    let result = await WebBrowser.openBrowserAsync(item.sourceLink);
-  };
-
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() == "rtl";
 
   function tr(key) {
-    return t(`politicNewsScreen:${key}`);
+    return t(`followChannelScreen:${key}`);
   }
 
-  // const politicsNews = [
-  //   {
-  //     key: "1",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
-  //     image: require("../assets/image/image6.png"),
-  //     logo: require("../assets/image/icon.png"),
-  //     time: "5 min ago",
-  //     video: false,
-  //   },
-  //   {
-  //     key: "2",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
-  //     image: require("../assets/image/image5.png"),
-  //     logo: require("../assets/image/icon2.png"),
-  //     time: "15 min ago",
-  //     video: true,
-  //   },
-  //   {
-  //     key: "3",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
-  //     image: require("../assets/image/image4.png"),
-  //     logo: require("../assets/image/icon3.png"),
-  //     time: "10 min ago",
-  //     video: false,
-  //   },
-  //   {
-  //     key: "4",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
-  //     image: require("../assets/image/image3.png"),
-  //     logo: require("../assets/image/icon.png"),
-  //     time: "20 min ago",
-  //     video: false,
-  //   },
-  //   {
-  //     key: "5",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
-  //     image: require("../assets/image/image2.png"),
-  //     logo: require("../assets/image/icon2.png"),
-  //     time: "25 min ago",
-  //     video: false,
-  //   },
-  //   {
-  //     key: "6",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
-  //     image: require("../assets/image/image1.png"),
-  //     logo: require("../assets/image/icon3.png"),
-  //     time: "25 min ago",
-  //     video: false,
-  //   },
-  // ];
-
-  const renderItemPoliticsNews = ({ item, index }) => {
+  const newsChannel = [
+    {
+      key: "1",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
+      image: require("../assets/image/image2.png"),
+      time: "5 min ago",
+      video: false,
+    },
+    {
+      key: "2",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
+      image: require("../assets/image/live4.png"),
+      time: "15 min ago",
+      video: false,
+    },
+    {
+      key: "3",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
+      image: require("../assets/image/live1.png"),
+      time: "10 min ago",
+      video: true,
+    },
+    {
+      key: "4",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
+      image: require("../assets/image/image3.png"),
+      time: "20 min ago",
+      video: false,
+    },
+    {
+      key: "5",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
+      image: require("../assets/image/live2.png"),
+      time: "25 min ago",
+      video: true,
+    },
+    {
+      key: "6",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscin elit.justo nunc ornare dui dignissim eget",
+      image: require("../assets/image/live3.png"),
+      time: "25 min ago",
+      video: false,
+    },
+  ];
+  const renderItemNewsChannel = ({ item, index }) => {
     const isFirst = index === 0;
     return (
       <View>
         {item.video ? (
           <TouchableOpacity
-            onPress={(e) => _handlePressButtonAsync(e, item)}
+            onPress={() => props.navigation.navigate("videoDetailScreen")}
             style={{
               marginTop: isFirst ? Default.fixPadding * 1.5 : 0,
               marginBottom: Default.fixPadding * 2,
@@ -119,6 +99,7 @@ const PoliticNewsScreen = (props) => {
           >
             <View>
               <Image source={item.image} />
+
               <View
                 style={{
                   position: "absolute",
@@ -145,16 +126,6 @@ const PoliticNewsScreen = (props) => {
                     color={Colors.black}
                   />
                 </View>
-              </View>
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  alignSelf: isRtl ? "flex-start" : "flex-end",
-                  padding: Default.fixPadding,
-                }}
-              >
-                <Image source={item.logo} />
               </View>
             </View>
             <View>
@@ -204,7 +175,7 @@ const PoliticNewsScreen = (props) => {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={(e) => _handlePressButtonAsync(e, item)}
+            onPress={() => props.navigation.navigate("newsDetailScreen")}
             style={{
               marginTop: isFirst ? Default.fixPadding * 1.5 : 0,
               marginBottom: Default.fixPadding * 2,
@@ -213,17 +184,7 @@ const PoliticNewsScreen = (props) => {
             }}
           >
             <View>
-            <Image source={{ uri: item.urlToImage ? item.urlToImage : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1HOpbOjRaShN8_MK1iFAc1ehpL9IaBcm-Hw&usqp=CAU' }} style={{ width: 375, height: 186 }} />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  alignSelf: isRtl ? "flex-start" : "flex-end",
-                  padding: Default.fixPadding,
-                }}
-              >
-                <Image source={item.logo} />
-              </View>
+              <Image source={item.image} />
             </View>
             <View>
               <Text
@@ -233,7 +194,7 @@ const PoliticNewsScreen = (props) => {
                   textAlign: isRtl ? "right" : "left",
                 }}
               >
-                {item.title}
+                {item.description}
               </Text>
               <View
                 style={{
@@ -276,11 +237,11 @@ const PoliticNewsScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
       <StatusBar backgroundColor={Colors.white} barStyle="dark-content" />
       <View
         style={{
-          paddingVertical: Default.fixPadding * 1.5,
+          paddingVertical: Default.fixPadding,
           backgroundColor: Colors.white,
           flexDirection: isRtl ? "row-reverse" : "row",
           alignItems: "center",
@@ -296,13 +257,109 @@ const PoliticNewsScreen = (props) => {
             color={Colors.black}
           />
         </TouchableOpacity>
-        <Text style={Fonts.Bold18Black}>{tr("politicsNews")}</Text>
+        <Text style={Fonts.Bold18Black}>CNBC {tr("channel")}</Text>
+      </View>
+
+      <View
+        style={{
+          flexDirection: isRtl ? "row-reverse" : "row",
+          marginVertical: Default.fixPadding,
+        }}
+      >
+        <View
+          style={{
+            flex: 3,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: Colors.lightSky,
+              borderRadius: 10,
+              padding: Default.fixPadding,
+            }}
+          >
+            <Image source={require("../assets/image/channel1.png")} />
+          </View>
+          <Text
+            style={{
+              ...Fonts.SemiBold16Black,
+              marginTop: Default.fixPadding * 0.5,
+            }}
+          >
+            CNBC
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 7,
+            justifyContent: "center",
+            alignItems: isRtl ? "flex-end" : "flex-start",
+          }}
+        >
+          <Text style={{ ...Fonts.SemiBold16Black }}>CNBC NEWS CHANNEL</Text>
+          <Text style={{ ...Fonts.SemiBold14Grey }}>
+            1.2 m {tr("followers")}
+          </Text>
+          <View
+            style={{
+              flexDirection: isRtl ? "row-reverse" : "row",
+            }}
+          >
+            <View
+              style={{
+                ...Default.shadow,
+                backgroundColor: Colors.primary,
+                borderRadius: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: Default.fixPadding,
+                marginRight: isRtl ? 0 : Default.fixPadding,
+              }}
+            >
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...Fonts.SemiBold14White,
+                  paddingHorizontal: Default.fixPadding * 2,
+                  paddingVertical: Default.fixPadding * 0.8,
+                }}
+              >
+                {tr("follow")}
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("liveTvScreen")}
+              style={{
+                ...Default.shadow,
+                backgroundColor: Colors.extraLightRed,
+                borderRadius: 5,
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: Default.fixPadding,
+                marginRight: isRtl ? Default.fixPadding : 0,
+              }}
+            >
+              <Text
+                numberOfLines={1}
+                style={{
+                  ...Fonts.SemiBold14White,
+                  paddingHorizontal: Default.fixPadding * 3,
+                  paddingVertical: Default.fixPadding * 0.8,
+                }}
+              >
+                {tr("live")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
       <FlatList
         style={{ backgroundColor: Colors.white }}
-        data={politicsNews}
-        renderItem={renderItemPoliticsNews}
+        data={newsChannel}
+        renderItem={renderItemNewsChannel}
         keyExtractor={(item) => item.key}
         showsVerticalScrollIndicator={false}
       />
@@ -310,4 +367,4 @@ const PoliticNewsScreen = (props) => {
   );
 };
 
-export default PoliticNewsScreen;
+export default FollowChannelScreen;

@@ -97,7 +97,7 @@ const BottomTab = () => {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name={isRtl ? "weatherScreen" : "categoryScreen"}
         component={isRtl ? WeatherScreen : CategoryScreen}
         options={{
@@ -112,7 +112,7 @@ const BottomTab = () => {
             />
           ),
         }}
-      />
+      /> */}
 
       <Tab.Screen
         name="videoScreen"
@@ -131,7 +131,7 @@ const BottomTab = () => {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name={isRtl ? "categoryScreen" : "weatherScreen"}
         component={isRtl ? CategoryScreen : WeatherScreen}
         options={{
@@ -146,7 +146,7 @@ const BottomTab = () => {
             />
           ),
         }}
-      />
+      /> */}
 
       <Tab.Screen
         name={isRtl ? "homeScreen" : "profileScreen"}
