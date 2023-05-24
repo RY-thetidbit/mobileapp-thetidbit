@@ -46,6 +46,21 @@ const HomeScreen = (props) => {
     };
   }, [navigation]);
 
+  // HANDLE BACKGROUND NOTIFICATIN DATA
+  useEffect(() => {
+    const notificationResponseListener = Notifications.addNotificationResponseReceivedListener(response => {
+      const { notification } = response;
+      const url = notification?.request?.content?.data?.url
+      // Navigate to a specific screen when a notification is received
+      // alert(JSON.stringify(notification));
+      _handlePressButtonAsync('', url);
+    });
+
+    return () => {
+      Notifications.removeNotificationResponseReceivedListener(notificationResponseListener);
+    };
+  }, [navigation]);
+
   const [expoPushToken, setExpoPushToken] = useState(null);
 
   useEffect(() => {
